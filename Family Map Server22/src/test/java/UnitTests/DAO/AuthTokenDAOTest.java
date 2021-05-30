@@ -1,10 +1,10 @@
-package UnitTests;
+package UnitTests.DAO;
 
 import DataAccessObjects.AuthTokenDAO;
 import DataAccessObjects.DataAccessException;
 import DataAccessObjects.DAO;
 import Models.AuthToken;
-import Service.Services.ClearService;
+import Services.ClearService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -40,9 +40,9 @@ class AuthTokenDAOTest {
 
     aDAO = new AuthTokenDAO(conn);
 
-    optimusToken = new AuthToken("OptimusPrime", "OppyPoppy1234");
-    megatronToken = new AuthToken("Megatron", "MeggaBronze4321");
-    bumbleToken = new AuthToken("BumbleBee", "BumbleRumble9000");
+    optimusToken = new AuthToken("NoBIBI", "nobibi123");
+    megatronToken = new AuthToken("Mark", "qwert");
+    bumbleToken = new AuthToken("gg", "9000");
 
   }
 
@@ -64,9 +64,9 @@ class AuthTokenDAOTest {
    */
   @Test
   void InsertPass() throws DataAccessException, SQLException {
-    assertNull(aDAO.Find("OppyPoppy1234"));
-    assertNull(aDAO.Find("MeggaBronze4321"));
-    assertNull(aDAO.Find("BumbleRumble9000"));
+    assertNull(aDAO.Find("nobibi123"));
+    assertNull(aDAO.Find("qwert"));
+    assertNull(aDAO.Find("9000"));
 
     aDAO.Insert(optimusToken);
     aDAO.Insert(megatronToken);
@@ -74,20 +74,20 @@ class AuthTokenDAOTest {
 
     conn.commit();
 
-    AuthToken tempOptimus = aDAO.Find("OppyPoppy1234");
-    AuthToken tempMegatron = aDAO.Find("MeggaBronze4321");
-    AuthToken tempBumble = aDAO.Find("BumbleRumble9000");
+    AuthToken tempOptimus = aDAO.Find("nobibi123");
+    AuthToken tempMegatron = aDAO.Find("qwert");
+    AuthToken tempBumble = aDAO.Find("9000");
 
     assertNotNull(tempOptimus);
     assertNotNull(tempMegatron);
     assertNotNull(tempBumble);
 
-    assertEquals("OptimusPrime", tempOptimus.getUsername());
-    assertEquals("OppyPoppy1234", tempOptimus.getAuthtoken());
-    assertEquals("Megatron", tempMegatron.getUsername());
-    assertEquals("MeggaBronze4321", tempMegatron.getAuthtoken());
-    assertEquals("BumbleBee", tempBumble.getUsername());
-    assertEquals("BumbleRumble9000", tempBumble.getAuthtoken());
+    assertEquals("NoBIBI", tempOptimus.getUsername());
+    assertEquals("nobibi123", tempOptimus.getAuthtoken());
+    assertEquals("Mark", tempMegatron.getUsername());
+    assertEquals("qwert", tempMegatron.getAuthtoken());
+    assertEquals("gg", tempBumble.getUsername());
+    assertEquals("9000", tempBumble.getAuthtoken());
   }
 
   /**
@@ -100,9 +100,9 @@ class AuthTokenDAOTest {
    */
   @Test
   void InsertFail() throws DataAccessException, SQLException {
-    assertNull(aDAO.Find("OppyPoppy1234"));
-    assertNull(aDAO.Find("MeggaBronze4321"));
-    assertNull(aDAO.Find("BumbleRumble9000"));
+    assertNull(aDAO.Find("nobibi123"));
+    assertNull(aDAO.Find("qwert"));
+    assertNull(aDAO.Find("9000"));
 
     aDAO.Insert(optimusToken);
     aDAO.Insert(megatronToken);
@@ -111,30 +111,28 @@ class AuthTokenDAOTest {
 
     conn.commit();
 
-    AuthToken tempOptimus = aDAO.Find("OppyPoppy1234");
-    AuthToken tempMegatron = aDAO.Find("MeggaBronze4321");
+    AuthToken tempOptimus = aDAO.Find("nobibi123");
+    AuthToken tempMegatron = aDAO.Find("qwert");
 
     assertNotNull(tempOptimus);
     assertNotNull(tempMegatron);
 
-    assertEquals("OptimusPrime", tempOptimus.getUsername());
-    assertEquals("OppyPoppy1234", tempOptimus.getAuthtoken());
-    assertEquals("Megatron", tempMegatron.getUsername());
-    assertEquals("MeggaBronze4321", tempMegatron.getAuthtoken());
+    assertEquals("NoBIBI", tempOptimus.getUsername());
+    assertEquals("nobibi123", tempOptimus.getAuthtoken());
+    assertEquals("Mark", tempMegatron.getUsername());
+    assertEquals("qwert", tempMegatron.getAuthtoken());
   }
 
   /**
-   * Inserts 3 AuthTokens into the AuthToken table and then finds those 3 tokens again.
-   * Test passes when it verifies that each found token is not null and that it matches the
-   * username and authtoken associated with that token.
-   * @throws DataAccessException when something goes wrong with Find.
-   * @throws SQLException when something goes wrong with Insert.
+   *     optimusToken = new AuthToken("NoBIBI", "nobibi123");
+   *     megatronToken = new AuthToken("Mark", "qwert");
+   *     bumbleToken = new AuthToken("gg", "9000");
    */
   @Test
   void FindPass() throws DataAccessException, SQLException {
-    assertNull(aDAO.Find("OppyPoppy1234"));
-    assertNull(aDAO.Find("MeggaBronze4321"));
-    assertNull(aDAO.Find("BumbleRumble9000"));
+    assertNull(aDAO.Find("nobibi123"));
+    assertNull(aDAO.Find("qwert"));
+    assertNull(aDAO.Find("9000"));
 
     aDAO.Insert(optimusToken);
     aDAO.Insert(megatronToken);
@@ -142,19 +140,19 @@ class AuthTokenDAOTest {
 
     conn.commit();
 
-    AuthToken tempOptimus = aDAO.Find("OppyPoppy1234");
-    AuthToken tempMegatron = aDAO.Find("MeggaBronze4321");
-    AuthToken tempBumble = aDAO.Find("BumbleRumble9000");
+    AuthToken tempOptimus = aDAO.Find("nobibi123");
+    AuthToken tempMegatron = aDAO.Find("qwert");
+    AuthToken tempBumble = aDAO.Find("9000");
 
     assertNotNull(tempOptimus);
     assertNotNull(tempMegatron);
     assertNotNull(tempBumble);
-    assertEquals("OptimusPrime", tempOptimus.getUsername());
-    assertEquals("OppyPoppy1234", tempOptimus.getAuthtoken());
-    assertEquals("Megatron", tempMegatron.getUsername());
-    assertEquals("MeggaBronze4321", tempMegatron.getAuthtoken());
-    assertEquals("BumbleBee", tempBumble.getUsername());
-    assertEquals("BumbleRumble9000", tempBumble.getAuthtoken());
+    assertEquals("NoBIBI", tempOptimus.getUsername());
+    assertEquals("nobibi123", tempOptimus.getAuthtoken());
+    assertEquals("Mark", tempMegatron.getUsername());
+    assertEquals("qwert", tempMegatron.getAuthtoken());
+    assertEquals("gg", tempBumble.getUsername());
+    assertEquals("9000", tempBumble.getAuthtoken());
   }
 
   /**
@@ -166,9 +164,9 @@ class AuthTokenDAOTest {
    */
   @Test
   void FindFail() throws DataAccessException, SQLException {
-    assertNull(aDAO.Find("OppyPoppy1234"));
-    assertNull(aDAO.Find("MeggaBronze4321"));
-    assertNull(aDAO.Find("BumbleRumble9000"));
+    assertNull(aDAO.Find("nobibi123"));
+    assertNull(aDAO.Find("qwert"));
+    assertNull(aDAO.Find("9000"));
 
     aDAO.Insert(optimusToken);
     aDAO.Insert(megatronToken);
@@ -176,9 +174,9 @@ class AuthTokenDAOTest {
 
     conn.commit();
 
-    AuthToken tempOptimus = aDAO.Find("OpyPopy123");
-    AuthToken tempMegatron = aDAO.Find("MegaBronz432");
-    AuthToken tempBumble = aDAO.Find("BumblRumbl900");
+    AuthToken tempOptimus = aDAO.Find("12");
+    AuthToken tempMegatron = aDAO.Find("123");
+    AuthToken tempBumble = aDAO.Find("90003");
 
     assertNull(tempOptimus);
     assertNull(tempMegatron);

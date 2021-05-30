@@ -1,21 +1,27 @@
 package Results;
 
 /**
- * A class that returns a response based on the success of the operation provided by the service.
+ * turn Clear Result to events services
  */
-public class ClearResult {
-
-  private String message;
+public class ClearResult
+{
+  // variable
+  private String messageOutput;
   private boolean success;
 
-  public ClearResult(String setMessage, boolean setSuccess) {
-    this.setMessage(setMessage);
+  //getter
+  public String getMessageOutput() {return messageOutput;}
+  public void setMessageOutput(String messageOutput) {this.messageOutput=messageOutput;}
+  //setter
+  public boolean getSuccess() { return success; }
+  public void setSuccess(boolean setSuccess) {this.success = setSuccess; }
+
+
+  // constructor
+  public ClearResult(String messageOutput, boolean setSuccess)
+  {
+    this.setMessageOutput(messageOutput);
     this.setSuccess(setSuccess);
   }
 
-  public String getMessage() { return message; }
-  public boolean getSuccess() { return success; }
-
-  public void setMessage(String message) { this.message = message; }
-  public void setSuccess(boolean setSuccess) {this.success = setSuccess; }
 }

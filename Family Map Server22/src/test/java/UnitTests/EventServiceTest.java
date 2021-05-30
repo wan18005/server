@@ -3,21 +3,22 @@ package UnitTests;
 import DataAccessObjects.*;
 import Models.*;
 import Results.EventResult;
-import Service.Services.ClearService;
-import Service.Services.EventService;
+import Services.ClearService;
+import Services.EventService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNull;
 
-public class EventServiceTest {
+public class EventServiceTest
+{
+
   ClearService clearService = new ClearService();
   EventService eventService = new EventService();
   DAO db = new DAO();
@@ -35,8 +36,8 @@ public class EventServiceTest {
     authTokenDAO = new AuthTokenDAO(conn);
     eventDAO = new EventsDAO(conn);
 
-    authTokenDAO.Insert(new AuthToken("OptimusPrime", "1111"));
-    authTokenDAO.Insert(new AuthToken("Megatron", "2222"));
+    authTokenDAO.Insert(new AuthToken("nobibi", "1111"));
+    authTokenDAO.Insert(new AuthToken("yirui", "2222"));
     conn.commit();
   }
 
@@ -48,11 +49,11 @@ public class EventServiceTest {
 
   @Test
   public void EventPass() throws SQLException, DataAccessException {
-    Event eOne = new Event("1", "OptimusPrime", "Can", "Russia", "Smell", "Mustache", 1, 2, 111);
-    Event eTwo = new Event("1-2", "OptimusPrime", "You", "Ussiar", "Stink", "HandelBar", 12, 23, 222);
-    Event eThree = new Event("1-2-3", "OptimusPrime", "Feel", "Ssiaru", "Stankin", "Curler", 123, 234, 333);
-    Event eFour = new Event("1-2-3-4", "Megatron", "The", "Siarus", "PooStink", "HairDryer", 1234, 2345, 444);
-    Event eFive = new Event("1-2-3-4-5", "OptimusPrime", "Love", "Iaruss", "VStank", "Laughed", 12345, 23456, 555);
+    Event eOne = new Event("1", "nobibi", "gg", "China", "ew", "22", 1, 2, 111);
+    Event eTwo = new Event("12", "nobibi", "Yoggu", "China", "we", "22", 12, 23, 222);
+    Event eThree = new Event("123", "nobibi", "gg", "China", "ew", "22", 123, 234, 333);
+    Event eFour = new Event("1234", "yirui", "gg", "China", "ew", "22", 1234, 2345, 444);
+    Event eFive = new Event("12345", "nobibi", "gg", "China", "ew", "22", 12345, 23456, 555);
     eventDAO.Insert(eOne);
     eventDAO.Insert(eTwo);
     eventDAO.Insert(eThree);
@@ -71,7 +72,7 @@ public class EventServiceTest {
     assertEquals(2, eventResult.getLongitude());
     assertEquals(111, eventResult.getYear());
     assertNull(eventResult.getMessage());
-    assertEquals("OptimusPrime", eventResult.getAssociatedUsername());
+    assertEquals("nobibi", eventResult.getAssociatedUsername());
 
     eventResult = eventService.event("1111");
 
@@ -93,11 +94,11 @@ public class EventServiceTest {
 
   @Test
   public void EventFail() throws SQLException, DataAccessException {
-    Event eOne = new Event("1", "OptimusPrime", "Can", "Russia", "Smell", "Mustache", 1, 2, 111);
-    Event eTwo = new Event("1-2", "OptimusPrime", "You", "Ussiar", "Stink", "HandelBar", 12, 23, 222);
-    Event eThree = new Event("1-2-3", "OptimusPrime", "Feel", "Ssiaru", "Stankin", "Curler", 123, 234, 333);
-    Event eFour = new Event("1-2-3-4", "Bumblebee", "The", "Siarus", "PooStink", "HairDryer", 1234, 2345, 444);
-    Event eFive = new Event("1-2-3-4-5", "OptimusPrime", "Love", "Iaruss", "VStank", "Laughed", 12345, 23456, 555);
+    Event eOne = new Event("1", "nobibi", "1", "1", "1", "1", 1, 2, 111);
+    Event eTwo = new Event("1-2", "nobibi", "2", "2", "2", "2", 12, 23, 222);
+    Event eThree = new Event("1-2-3", "nobibi", "3", "3", "3", "3", 123, 234, 333);
+    Event eFour = new Event("1-2-3-4", "gg", "4", "4", "4", "4", 1234, 2345, 444);
+    Event eFive = new Event("1-2-3-4-5", "nobibi", "5", "5", "5", "5", 12345, 23456, 555);
     eventDAO.Insert(eOne);
     eventDAO.Insert(eTwo);
     eventDAO.Insert(eThree);
@@ -105,7 +106,7 @@ public class EventServiceTest {
     eventDAO.Insert(eFive);
     conn.commit();
 
-    eventResult = eventService.event("Bumblebee", "1111");
+    eventResult = eventService.event("23", "1111");
 
     assertNull(eventResult.getEventID());
     assertNull(eventResult.getAssociatedUsername());
@@ -123,6 +124,6 @@ public class EventServiceTest {
 
     assertNull(eventResult.getData());
     assertNotNull(eventResult.getMessage());
-    assertEquals("Error: Person is not associated with Megatron.", eventResult.getMessage());
+    assertEquals("Error: Person is not associated with yirui.", eventResult.getMessage());
   }
 }

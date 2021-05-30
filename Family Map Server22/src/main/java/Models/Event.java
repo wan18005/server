@@ -63,15 +63,15 @@ public class Event {
   public float getLongitude() { return longitude; }
   public int getYear() { return year; }
   //setter
-  public void setEventID(String setEventID) { this.eventID = setEventID; }
-  public void setAssociatedUsername(String setAssociatedUsername) { this.associatedUsername = setAssociatedUsername; }
-  public void setPersonID(String setPersonID) { this.personID = setPersonID; }
-  public void setCountry(String setCountry) { this.country = setCountry; }
-  public void setCity(String setCity) { this.city = setCity; }
-  public void setEventType(String setEventType) { this.eventType = setEventType; }
-  public void setLatitude(Float setLatitude) { this.latitude = setLatitude; }
-  public void setLongitude(Float setLongitude) { this.longitude = setLongitude; }
-  public void setYear(Integer setYear) { this.year = setYear; }
+  public void setEventID(String EventID) { this.eventID = EventID; }
+  public void setAssociatedUsername(String AssociatedUsername) { this.associatedUsername = AssociatedUsername; }
+  public void setPersonID(String PersonID) { this.personID = PersonID; }
+  public void setCountry(String Country) { this.country = Country; }
+  public void setCity(String City) { this.city = City; }
+  public void setEventType(String EventType) { this.eventType = EventType; }
+  public void setLatitude(Float Latitude) { this.latitude = Latitude; }
+  public void setLongitude(Float Longitude) { this.longitude = Longitude; }
+  public void setYear(Integer Year) { this.year = Year; }
 
   @Override
   public boolean equals(Object o) {

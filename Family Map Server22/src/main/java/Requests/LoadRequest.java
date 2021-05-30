@@ -1,16 +1,18 @@
 package Requests;
 
 import Models.*;
+import java.io.*;
+import java.util.*;
 
 /**
- * A class that packages a gson request and turns it into a Java object.
+ * turn gson request to Java load object.
  */
 public class LoadRequest {
-
+//var
   private User[] users;
   private Person[] persons;
   private Event[] events;
-
+//default
   public LoadRequest() {
     this.users = null;
     this.persons = null;
@@ -30,4 +32,6 @@ public class LoadRequest {
   public void setUsers(User[] users) { this.users = users; }
   public void setPersons(Person[] persons) { this.persons = persons; }
   public void setEvents(Event[] events) { this.events = events; }
+
+
 }

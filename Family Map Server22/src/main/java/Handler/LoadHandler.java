@@ -3,7 +3,7 @@ package Handler;
 import DataAccessObjects.DataAccessException;
 import Requests.LoadRequest;
 import Results.LoadResult;
-import Service.Services.LoadService;
+import Services.LoadService;
 import com.google.gson.Gson;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;

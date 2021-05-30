@@ -8,8 +8,8 @@ import Models.User;
 
 import Requests.LoginRequest;
 import Results.LoginResult;
-import Service.Services.ClearService;
-import Service.Services.LoginService;
+import Services.ClearService;
+import Services.LoginService;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -37,11 +37,11 @@ public class LoginServiceTest {
 
     UsersDAO = new UsersDAO(conn);
 
-    User uOne = new User("OptimusPrime", "autobotsrox", "OptimusRocks@gmail.com", "Optimus", "Prime", "R", "Optimus123");
-    User uTwo = new User("Megatron", "OptimusIsSilly", "MegaRocks@gmail.com", "Mega", "Tron", "R", "MegaMega123321Babylessgo!");
+    User TestOne = new User("aa", "aa", "aa@gmail.com", "a", "a", "M", "a1");
+    User TestTwo = new User("bb", "bb", "bb@gmail.com", "b", "b", "F", "b1!");
 
-    UsersDAO.Insert(uOne);
-    UsersDAO.Insert(uTwo);
+    UsersDAO.Insert(TestOne);
+    UsersDAO.Insert(TestTwo);
     conn.commit();
   }
 
@@ -54,9 +54,9 @@ public class LoginServiceTest {
 
   @Test
   public void LoginPass() throws DataAccessException, SQLException {
-    loginResult = loginService.login(new LoginRequest("OptimusPrime", "autobotsrox"));
+    loginResult = loginService.login(new LoginRequest("aa", "aa"));
 
-    assertEquals("OptimusPrime", loginResult.getUsername());
+    assertEquals("aa", loginResult.getUsername());
     assertNull(loginResult.getMessage());
     assertNotNull(loginResult.getPersonID());
     assertNotNull(loginResult.getAuthtoken());
@@ -68,22 +68,22 @@ public class LoginServiceTest {
     UsersDAO.Clear();
     conn.commit();
 
-    loginResult = loginService.login(new LoginRequest("Megatron", "OptimusIsSilly"));
+    loginResult = loginService.login(new LoginRequest("bb", "bb"));
     assertNull(loginResult.getAuthtoken());
     assertNull(loginResult.getUsername());
     assertNull(loginResult.getPersonID());
     assertNotNull(loginResult.getMessage());
-    assertEquals("Error: Unable to retrieve requested user, user does not exist.", loginResult.getMessage());
+    assertEquals("Error: user does not exist.", loginResult.getMessage());
   }
 
   @Test
   public void LoginFailBadPassword() throws DataAccessException, SQLException {
-    loginResult = loginService.login(new LoginRequest("OptimusPrime", "autobotsroxx"));
+    loginResult = loginService.login(new LoginRequest("aa", "llll"));
 
     assertNull(loginResult.getAuthtoken());
     assertNull(loginResult.getUsername());
     assertNull(loginResult.getPersonID());
     assertNotNull(loginResult.getMessage());
-    assertEquals("Error: Password is incorrect.", loginResult.getMessage());
+    assertEquals("Error: Password does not match.", loginResult.getMessage());
   }
 }

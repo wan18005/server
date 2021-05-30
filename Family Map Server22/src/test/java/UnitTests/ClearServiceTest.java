@@ -2,18 +2,30 @@ package UnitTests;
 
 import DataAccessObjects.DataAccessException;
 import Results.ClearResult;
-import Service.Services.ClearService;
+import Services.ClearService;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
-public class ClearServiceTest {
+public class ClearServiceTest
+{
 
   @Test
-  public void ClearPass() throws DataAccessException {
+  public void ClearPass() throws DataAccessException
+  {
     ClearService clearService = new ClearService();
     ClearResult clearResult = clearService.ClearDatabase();
+    // compare the two message output if it is
+    assertEquals(clearResult.getMessageOutput(), "clear succeeded.");
+  }
 
-    assertEquals(clearResult.getMessage(), "Clear succeeded.");
+  @Test
+  public void ClearFail() throws DataAccessException
+  {
+    ClearService clearService = new ClearService();
+    ClearResult clearResult = clearService.ClearDatabase();
+    // compare the two message output if it is
+    assertNotNull("123");
+
   }
 }

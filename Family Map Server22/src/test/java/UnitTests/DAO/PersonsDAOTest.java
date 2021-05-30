@@ -1,14 +1,15 @@
-package UnitTests;
+package UnitTests.DAO;
 
 import DataAccessObjects.DataAccessException;
 import DataAccessObjects.DAO;
 import DataAccessObjects.PersonsDAO;
-
 import DataAccessObjects.UsersDAO;
-import Models.Person;
 
+import Models.Person;
 import Models.User;
-import Service.Services.ClearService;
+
+import Services.ClearService;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -16,7 +17,6 @@ import org.junit.jupiter.api.Test;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 class PersonsDAOTest {
@@ -24,16 +24,17 @@ class PersonsDAOTest {
   ClearService clearService = new ClearService();
 
   Connection conn;
-  private Person bestPerson;
+  private Person testPerson;
   private PersonsDAO personDAO;
   private UsersDAO userDAO;
 
 
   @BeforeEach
-  public void SetUp() throws DataAccessException {
+  public void SetUp() throws DataAccessException
+  {
     clearService.ClearDatabase();
-    bestPerson = new Person("Optimus123", "OptimusPrime123", "Optimus", "Prime",
-            "M", "OptimusPapa001", "OptimusMama001", "000000");
+    testPerson = new Person("nobibi", "NOBIBI", "Yiqi", "Wang",
+            "M", "dad001", "mom001", "000000");
 
     conn = db.getConnection();
     personDAO = new PersonsDAO(conn);
@@ -41,92 +42,102 @@ class PersonsDAOTest {
   }
 
   @AfterEach
-  public void TearDown() throws DataAccessException {
+  public void TearDown() throws DataAccessException
+  {
     db.closeConnection(false);
     clearService.ClearDatabase();
   }
 
   @Test
   void InsertPass() throws DataAccessException {
-    personDAO.Insert(bestPerson);
+    personDAO.Insert(testPerson);
 
-    Person compareTest = personDAO.Find(bestPerson.getPersonID());
+    Person compareTest = personDAO.Find(testPerson.getPersonID());
 
     assertNotNull(compareTest);
 
-    assertEquals(bestPerson, compareTest);
+    assertEquals(testPerson, compareTest);
   }
 
   @Test
   void InsertFail() throws DataAccessException {
-    personDAO.Insert(bestPerson);
-    assertThrows(DataAccessException.class, () -> personDAO.Insert(bestPerson));
+    personDAO.Insert(testPerson);
+    assertThrows(DataAccessException.class, () -> personDAO.Insert(testPerson));
   }
 
+
+  /*
+      testPerson = new Person("nobibi", "NOBIBI", "Yiqi", "Wang",
+"M", "dad001", "mom001", "000000");
+   */
   @Test
   void DeletePass() throws DataAccessException, SQLException {
-    assertNull(personDAO.Find("Optimus123"));
+    assertNull(personDAO.Find("nobibi"));
 
-    personDAO.Insert(bestPerson);
+    personDAO.Insert(testPerson);
     conn.commit();
 
-    assertEquals("OptimusPrime123", personDAO.Find("Optimus123").getAssociatedUsername());
-    personDAO.Delete("OptimusPrime123");
+    assertEquals("NOBIBI", personDAO.Find("nobibi").getAssociatedUsername());
+    personDAO.Delete("NOBIBI");
     conn.commit();
-    assertNull(personDAO.Find("Optimus123"));
+    assertNull(personDAO.Find("nobibi"));
   }
 
+  /*
+    testPerson = new Person("nobibi", "NOBIBI", "Yiqi", "Wang",
+"M", "dad001", "mom001", "000000");
+ */
   @Test
   void DeleteFail() throws DataAccessException, SQLException {
-    assertNull(personDAO.Find("Optimus123"));
+    assertNull(personDAO.Find("nobibi"));
 
-    personDAO.Insert(bestPerson);
+    personDAO.Insert(testPerson);
     conn.commit();
 
-    assertEquals("OptimusPrime123", personDAO.Find("Optimus123").getAssociatedUsername());
+    assertEquals("NOBIBI", personDAO.Find("nobibi").getAssociatedUsername());
 
-    personDAO.Delete("Optimus123");
+    personDAO.Delete("nobibi");
     conn.commit();
 
-    assertNotNull(personDAO.Find("Optimus123"));
+    assertNotNull(personDAO.Find("nobibi"));
   }
 
   @Test
   void ClearPass() {
     try {
-      assertNull(personDAO.Find("Optimus123"));
-      personDAO.Insert(bestPerson);
-      assertNotNull(personDAO.Find("Optimus123"));
+      assertNull(personDAO.Find("nobibi"));
+      personDAO.Insert(testPerson);
+      assertNotNull(personDAO.Find("nobibi"));
       assertTrue(personDAO.Clear());
     } catch (DataAccessException e) {
-      System.out.println("Error encountered while finding Person\n");
+      System.out.println("Error unable to find the person using the personID\n");
     }
   }
 
   @Test
   void FindPass() {
     try {
-      assertNull(personDAO.Find("Optimus123"));
-      personDAO.Insert(bestPerson);
-      assertNotNull(personDAO.Find("Optimus123"));
+      assertNull(personDAO.Find("nobibi"));
+      personDAO.Insert(testPerson);
+      assertNotNull(personDAO.Find("nobibi"));
 
-      Person testPerson = personDAO.Find("Optimus123");
+      Person testPerson = personDAO.Find("nobibi");
 
-      assertEquals(bestPerson, testPerson);
+      assertEquals(testPerson, testPerson);
     } catch (DataAccessException e) {
-      System.out.println("Error encountered while finding Person\n");
+      System.out.println("Error: unable to find the person\n");
     }
   }
 
   @Test
   void FindFail() {
     try {
-      assertNull(personDAO.Find("Optimus123"));
-      personDAO.Insert(bestPerson);
-      assertNotNull(personDAO.Find("Optimus123"));
-      assertNull(personDAO.Find("Doesn'tExist"));
+      assertNull(personDAO.Find("nobibi"));
+      personDAO.Insert(testPerson);
+      assertNotNull(personDAO.Find("nobibi"));
+      assertNull(personDAO.Find("gigids"));
     } catch (DataAccessException e) {
-      System.out.println("Error encountered while finding Person\n");
+      System.out.println("Error: unable to find the person\n");
     }
   }
 
@@ -135,34 +146,30 @@ class PersonsDAOTest {
     ArrayList<Person> persons = new ArrayList<Person>();
     ArrayList<Person> findPersons = new ArrayList<>();
 
-    User uOne = new User("Megatron", "autobots", "stars@yahoo", "Optimus", "Prime", "R", "OptimusPappi");
+    User TestUserOne = new User("nobibi", "password", "nobibi@gmail.com", "Yiqi", "Wang", "M", "nobibi1");
 
-    Person pOne = new Person("1", "OptimusPrime", "Bob", "Saggit", "F", "123abc", "abc123", null);
-    Person pTwo = new Person("1-2", "OptimusPrime", "Bill", "Saggy", "F", null, null, null);
-    Person pThree = new Person("1-2-3", "OptimusPrime", "Boop", "Saggin", "M", null, "abc1234", null);
-    Person pFour = new Person("1-2-3-4", "Megatron", "Bop", "Sagger", "M", "123abcd", null, null);
-    Person pFive = new Person("1-2-3-4-5", "Megatron", "Pob", "Reggas", "M", "dcba321", null, null);
-    Person pSix = new Person("OptimusPappi", "OptimusPrime", "Oppy", "Poppy", "R", "m", "1234", null);
+    Person TestPersonOne = new Person("1", "gg", "mark", "sd", "F", "dad002", "mom002", "hus02");
+    Person TestPersonTwo = new Person("1-2", "gg", "Bill", "Saggy", "F", null, null, "hus03");
+    Person TestPersonThree = new Person("1-2-3", "SB", "Boop", "Saggin", "M", null, "abc1234", null);
 
-    userDAO.Insert(uOne);
-    personDAO.Insert(pOne);
-    personDAO.Insert(pTwo);
-    personDAO.Insert(pThree);
-    personDAO.Insert(pFour);
-    personDAO.Insert(pFive);
-    personDAO.Insert(pSix);
+
+    userDAO.Insert(TestUserOne);
+
+    personDAO.Insert(TestPersonOne);
+    personDAO.Insert(TestPersonTwo);
+    personDAO.Insert(TestPersonThree);
     conn.commit();
 
-    persons.add(pOne);
-    persons.add(pTwo);
-    persons.add(pThree);
-    persons.add(pSix);
+    persons.add(TestPersonOne);
+    persons.add(TestPersonTwo);
 
-    findPersons = personDAO.FindAll("OptimusPrime");
+
+    findPersons = personDAO.FindAll("gg");
     assertNotNull(findPersons);
-    assertEquals(4, findPersons.size());
+    assertEquals(2, findPersons.size());
 
-    for (int i = 0; i < persons.size(); i++) {
+    for (int i = 0; i < persons.size(); i++)
+    {
       assertEquals(persons.get(i), findPersons.get(i));
     }
   }
@@ -172,36 +179,28 @@ class PersonsDAOTest {
     ArrayList<Person> persons = new ArrayList<Person>();
     ArrayList<Person> findPersons = new ArrayList<>();
 
-    User uOne = new User("Megatron", "autobots", "stars@yahoo", "Optimus", "Prime", "R", "OptimusPappi");
+    User uOne = new User("123", "1234", "123@gmaiil.com", "yi", "qw", "M", "11021");
 
-    Person pOne = new Person("1", "OptimusPrime", "Bob", "Saggit", "F", "123abc", "abc123", null);
     Person pTwo = new Person("1-2", "OptimusPrime", "Bill", "Saggy", "F", null, null, null);
-    Person pThree = new Person("1-2-3", "OptimusPrime", "Boop", "Saggin", "M", null, "abc1234", null);
-    Person pFour = new Person("1-2-3-4", "Megatron", "Bop", "Sagger", "M", "123abcd", null, null);
-    Person pFive = new Person("1-2-3-4-5", "Megatron", "Pob", "Reggas", "M", "dcba321", null, null);
+    Person pFour = new Person("1-2-3-4", "gg", "Bop", "Sagger", "M", "123abcd", null, null);
     Person pSix = new Person("OptimusPappi", "OptimusPrime", "Oppy", "Poppy", "R", "m", "1234", null);
-    Person pSeven = new Person("1-2-3-4-5-6", "Megatron", "Chilly", "Are", "F", "1029Boo", null, null);
-    Person pEight = new Person("1-2-3-4-5-6-7", "Megatron", "Dogs", "Yummy", "F", "Lol744", null, null);
+    Person pEight = new Person("1-2-3-4-5-6-7", "gg", "Dogs", "Yummy", "F", "Lol744", null, null);
 
     userDAO.Insert(uOne);
-    personDAO.Insert(pOne);
+
     personDAO.Insert(pTwo);
-    personDAO.Insert(pThree);
     personDAO.Insert(pFour);
-    personDAO.Insert(pFive);
     personDAO.Insert(pSix);
-    personDAO.Insert(pSeven);
     personDAO.Insert(pEight);
+
     conn.commit();
 
-    persons.add(pOne);
     persons.add(pTwo);
-    persons.add(pThree);
     persons.add(pSix);
 
-    findPersons = personDAO.FindAll("Megatron");
+    findPersons = personDAO.FindAll("gg");
     assertNotNull(findPersons);
-    assertEquals(4, findPersons.size());
+    assertEquals(2, findPersons.size());
 
     for (int i = 0; i < persons.size(); i++) {
       assertNotEquals(persons.get(i), findPersons.get(i));

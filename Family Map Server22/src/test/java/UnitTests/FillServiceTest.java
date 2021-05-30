@@ -7,10 +7,10 @@ import Requests.RegisterRequest;
 import Results.FillResult;
 import Results.PersonResult;
 import Results.RegisterResult;
-import Service.Services.ClearService;
-import Service.Services.FillService;
-import Service.Services.PersonService;
-import Service.Services.RegisterService;
+import Services.ClearService;
+import Services.FillService;
+import Services.PersonService;
+import Services.RegisterService;
 
 import DataAccessObjects.*;
 
@@ -39,11 +39,11 @@ public class FillServiceTest {
 
     AuthTokenDAO authTokenDAO = new AuthTokenDAO(conn);
 
-    registerRequest = new RegisterRequest("OptimusPrime", "autobots", "stars@yahoo.com",
-            "Optimus", "Prime", "R");
+    registerRequest = new RegisterRequest("aa", "1", "123@hotmail.com",
+            "1", "1", "T");
 
-    authTokenDAO.Insert(new AuthToken("OptimusPrime", "1111"));
-    authTokenDAO.Insert(new AuthToken("Megatron", "2222"));
+    authTokenDAO.Insert(new AuthToken("aa", "1111"));
+    authTokenDAO.Insert(new AuthToken("bb", "2222"));
 
     conn.commit();
   }
@@ -63,10 +63,10 @@ public class FillServiceTest {
     RegisterResult registerResult = registerService.Register(registerRequest);
 
     assertNull(personResult.getData());
-    assertEquals("Error: OptimusPrime has no associated Persons.", personResult.getMessage());
+    assertEquals("Error: aa has no associated Persons.", personResult.getMessage());
 
     FillService fillService = new FillService();
-    FillResult fillResult = fillService.Fill("OptimusPrime", 4);
+    FillResult fillResult = fillService.Fill("aa", 4);
 
     personResult = personService.Person("1111");
     assertNotNull(personResult.getData());
@@ -81,10 +81,10 @@ public class FillServiceTest {
     PersonService personService = new PersonService();
     PersonResult personResult = personService.Person("2222");
     assertNull(personResult.getData());
-    assertEquals("Error: Megatron has no associated Persons.", personResult.getMessage());
+    assertEquals("Error: bb has no associated Persons.", personResult.getMessage());
 
     FillService fillService = new FillService();
-    FillResult fillResult = fillService.Fill("Megatron", - 1);
+    FillResult fillResult = fillService.Fill("bb", - 1);
 
     assertEquals("Error: Number of generations is less than or equal to 0.", fillResult.getMessage());
   }

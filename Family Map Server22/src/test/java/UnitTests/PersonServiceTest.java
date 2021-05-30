@@ -2,7 +2,7 @@ package UnitTests;
 
 import DataAccessObjects.*;
 import Results.PersonResult;
-import Service.Services.*;
+import Services.*;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -13,7 +13,7 @@ import java.util.ArrayList;
 
 import DataAccessObjects.DataAccessException;
 import Models.*;
-import Service.Services.ClearService;
+
 
 import static org.junit.jupiter.api.Assertions.*;
 

@@ -1,50 +1,29 @@
 package Results;
 
+import java.io.*;
 import Models.Event;
-
 import java.util.ArrayList;
 
 /**
- * A class that returns a response based on the success of the operation provided by the service.
+ * turn Result to events services
  */
 public class EventResult {
 
-  private ArrayList<Event> data;
-  private String eventID;
-  private String associatedUsername;
-  private String personID;
-  private String country;
-  private String city;
-  private String eventType;
-  private Float latitude;
-  private Float longitude;
-  private Integer year;
-  private String message;
-  private boolean success;
+// variable
+    private ArrayList<Event> data;
+    private String eventID;
+    private String associatedUsername;
+    private String personID;
+    private String country;
+    private String city;
+    private String eventType;
+    private Float latitude;
+    private Float longitude;
+    private Integer year;
+    private String message;
+    private boolean success;
 
-  public EventResult(String setMessage, boolean setSuccess) {
-    this.setMessage(setMessage);
-    this.setSuccess(setSuccess);
-  }
-
-  public EventResult(ArrayList<Event> setEvents) {
-    this.setData(setEvents);
-    this.setSuccess(true);
-  }
-
-  public EventResult(Event event, String username) {
-    this.setEventID(event.getEventID());
-    this.setAssociatedUsername(username);
-    this.setPersonID(event.getPersonID());
-    this.setCountry(event.getCountry());
-    this.setCity(event.getCity());
-    this.setEventType(event.getEventType());
-    this.setLatitude(event.getLatitude());
-    this.setLongitude(event.getLongitude());
-    this.setYear(event.getYear());
-    this.setSuccess(true);
-  }
-
+  //getter
   public ArrayList<Event> getData() { return data; }
   public String getEventID() { return eventID; }
   public String getAssociatedUsername() { return associatedUsername; }
@@ -57,7 +36,7 @@ public class EventResult {
   public Integer getYear() { return year; }
   public String getMessage() { return message; }
   public boolean getSuccess() { return success; }
-
+  //setter
   public void setData(ArrayList<Event> setEvents) { this.data = setEvents; }
   public void setEventID(String setEventID) { this.eventID = setEventID; }
   public void setAssociatedUsername(String setAssociatedUsername) { this.associatedUsername = setAssociatedUsername; }
@@ -70,7 +49,36 @@ public class EventResult {
   public void setYear(Integer setYear) { this.year = setYear; }
   public void setMessage(String setMessage) { this.message = setMessage; }
   public void setSuccess(boolean setSuccess) { this.success = setSuccess; }
-}
+
+
+  public EventResult(ArrayList<Event> setEvents)
+  {
+    this.setData(setEvents);
+    this.setSuccess(true);
+  }
+
+    public EventResult(String setMessage, boolean setSuccess)
+    {
+      this.setMessage(setMessage);
+      this.setSuccess(setSuccess);
+    }
+
+    public EventResult(Event event, String username)
+    {
+      this.setEventID(event.getEventID());
+      this.setAssociatedUsername(username);
+      this.setPersonID(event.getPersonID());
+      this.setCountry(event.getCountry());
+      this.setCity(event.getCity());
+      this.setEventType(event.getEventType());
+      this.setLatitude(event.getLatitude());
+      this.setLongitude(event.getLongitude());
+      this.setYear(event.getYear());
+      this.setSuccess(true);
+    }
+
+  }
+
 
 
 

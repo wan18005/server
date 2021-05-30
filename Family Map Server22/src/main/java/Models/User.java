@@ -47,13 +47,13 @@ public class User
   public String getGender() { return gender; }
   public String getPersonID() { return personID; }
 
-  public void setUsername(String setUsername) { this.username = setUsername; }
-  public void setPassword(String setPassword) { this.password = setPassword; }
-  public void setEmail(String setEmail) { this.email = setEmail; }
-  public void setFirstName(String setFirstName) { this.firstName = setFirstName; }
-  public void setLastName(String setLastName) { this.lastName = setLastName; }
-  public void setGender(String setGender) { this.gender = setGender; }
-  public void setPersonID(String setPersonID) { this.personID = setPersonID; }
+  public void setUsername(String Username) { this.username = Username; }
+  public void setPassword(String Password) { this.password = Password; }
+  public void setEmail(String Email) { this.email = Email; }
+  public void setFirstName(String FirstName) { this.firstName = FirstName; }
+  public void setLastName(String LastName) { this.lastName = LastName; }
+  public void setGender(String Gender) { this.gender = Gender; }
+  public void setPersonID(String PersonID) { this.personID =PersonID ; }
 
   @Override
   public boolean equals(Object o) {

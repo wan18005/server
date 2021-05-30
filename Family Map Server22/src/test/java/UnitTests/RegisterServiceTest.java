@@ -5,8 +5,7 @@ import DataAccessObjects.DAO;
 
 import Requests.RegisterRequest;
 import Results.RegisterResult;
-import Service.Services.ClearService;
-import Service.Services.RegisterService;
+import Services.*;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;

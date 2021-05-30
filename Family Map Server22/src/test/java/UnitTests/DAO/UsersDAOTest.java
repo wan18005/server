@@ -1,4 +1,4 @@
-package UnitTests;
+package UnitTests.DAO;
 
 import DataAccessObjects.*;
 
@@ -13,64 +13,63 @@ import java.sql.Connection;
 import static org.junit.jupiter.api.Assertions.*;
 
 class UsersDAOTest {
-  private DAO db;
-  private User bestUser;
+  private DAO dao;
+  private User TestUser;
   private UsersDAO uDao;
 
   @BeforeEach
   public void setUp() throws DataAccessException {
-    //here we can set up any classes or variables we will need for the rest of our tests
-    //lets create a new database
-    db = new DAO();
-    //and a new user with random data
-    bestUser = new User("OptimusPrime123", "MegatronIsDumb", "OptimusRocks@gmail.com",
-            "Optimus", "Prime", "M", "Optimus123");
+
+    dao = new DAO();
+    TestUser = new User("7758", "123", "abc@gmail.com",
+            "Yi", "Wa", "M", "YiWA001");
 
 
-    //Here, we'll open the connection in preparation for the test case to use it
-    Connection conn = db.getConnection();
-    //Let's clear the database as well so any lingering data doesn't affect our tests
-    db.ClearTables();
-    //Then we pass that connection to the UserDAO so it can access the database
-    uDao = new UsersDAO(conn);
+    //open connection
+    Connection connection = dao.getConnection();
+    // clear the table
+    dao.ClearTables();
+    // pass to UDAO
+    uDao = new UsersDAO(connection);
   }
 
   @AfterEach
-  public void tearDown() throws DataAccessException {
-    //Here we close the connection to the database file so it can be opened elsewhere.
-    //We will leave commit to false because we have no need to save the changes to the database
-    //between test cases
-    db.closeConnection(false);
+  public void shutDown() throws DataAccessException {
+   //close it after each test is done
+    dao.closeConnection(false);
   }
 
   @Test
   void InsertPass() throws DataAccessException {
-    uDao.Insert(bestUser);
+    uDao.Insert(TestUser);
 
-    User compareTest = uDao.Find(bestUser.getUsername());
+    User compareTest = uDao.Find(TestUser.getUsername());
 
     assertNotNull(compareTest);
 
-    assertEquals(bestUser, compareTest);
+    assertEquals(TestUser, compareTest);
   }
 
   @Test
   void InsertFail() throws DataAccessException {
-    uDao.Insert(bestUser);
+    uDao.Insert(TestUser);
 
-    assertThrows(DataAccessException.class, () -> uDao.Insert(bestUser));
+    assertThrows(DataAccessException.class, () -> uDao.Insert(TestUser));
   }
 
-
+/*
+    TestUser = new User("7758", "123", "abc@gmail.com",
+            "Yi", "Wa", "M", "YiWA001");
+ */
   @Test
   void FindPass() {
     try {
-      assertNull(uDao.Find("OptimusPrime123"));
-      uDao.Insert(bestUser);
-      assertNotNull(uDao.Find("OptimusPrime123"));
-
-      User testUser = uDao.Find("OptimusPrime123");
-      assertEquals(bestUser, testUser);
+      assertNull(uDao.Find("7758"));
+      uDao.Insert(TestUser);
+      assertNotNull(uDao.Find("7758"));
+      //find 7758 in test user
+      User testUser = uDao.Find("7758");
+      assertEquals(TestUser, testUser);
     } catch (DataAccessException e) {
       System.out.println("Error encountered while finding User\n");
     }
@@ -79,11 +78,14 @@ class UsersDAOTest {
   @Test
   void FindFail() {
     try {
-      assertNull(uDao.Find("OptimusPrime123"));
-      uDao.Insert(bestUser);
-      assertNotNull(uDao.Find("OptimusPrime123"));
-
-      assertNull(uDao.Find("Doesn'tExist"));
+      // find 7758 then insert
+      assertNull(uDao.Find("7758"));
+      uDao.Insert(TestUser);
+      //find 7758
+      assertNotNull(uDao.Find("7758"));
+      // find 1234
+      assertNull(uDao.Find("1234"));
+      //not match fail
     } catch (DataAccessException e) {
       System.out.println("Error encountered while finding User\n");
     }
@@ -92,11 +94,13 @@ class UsersDAOTest {
   @Test
   void Clear() {
     try {
-      assertNull(uDao.Find("OptimusPrime123"));
-      uDao.Insert(bestUser);
-      assertNotNull(uDao.Find("OptimusPrime123"));
-
+      assertNull(uDao.Find("7758"));
+      uDao.Insert(TestUser);
+      //find user 7758
+      assertNotNull(uDao.Find("7758"));
+      // if find clear
       assertTrue(uDao.Clear());
+
     } catch (DataAccessException e) {
       System.out.println("Error encountered while finding User\n");
     }

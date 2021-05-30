@@ -38,6 +38,7 @@ public class Server {
 
     System.out.println("Starting server");
     server.start();
-    System.out.println("Server started");
+    System.out.println("Server started at port " + portNumber);
+
   }
 }
