@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="Shared Data:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/Shared_Data_jar</output-path>
+    <root id="archive" name="Shared Data.jar">
+      <element id="module-output" name="Shared Data" />
+    </root>
+  </artifact>
+</component>
